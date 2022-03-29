@@ -1,0 +1,46 @@
+{
+    "name": "devapexbr/laravel-router",
+    "description": "Laravel Controller phpDOC Route Generator",
+    "keywords": [
+        "laravel",
+        "route",
+        "controller",
+        "generate",
+        "phpdoc"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Renalcio Carlos",
+            "email": "carlos@devapex.com.br",
+            "homepage": "http://devapex.com.br",
+            "role": "Co-founder & Developer"
+        }
+    ],
+    "require": {
+        "php": ">=7",
+        "composer/composer": "^1.6 || ^2",
+        "laravel/framework": ">=5.8",
+        "barryvdh/reflection-docblock": "^2.0.6"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "master"
+        },
+        "laravel": {
+            "providers": [
+                "DevApex\\LaravelRouter\\RouterServiceProvider"
+            ]
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "DevApex\\LaravelRouter\\": "src"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
