@@ -46,12 +46,14 @@ class RouterCommand extends Command
     protected $signature = 'router
                                 {--no-verbose : No Verbose}
                                 {--s|stats : Exibir estatisticas}
-                                {--no-stats : Ocultar Estatisticas}';
+                                {--no-stats : Ocultar Estatisticas}
+                                {--c|clean : Não exibir lista de rotas}
+                                {--no-list : Não exibir Estatisticas}';
 
     /**
      * @var bool
      */
-    private $verbose, $stats;
+    private $verbose, $stats, $clean;
 
     /**
      * The console command description.
@@ -141,9 +143,11 @@ class RouterCommand extends Command
      */
     public function handle()
     {
+        //$this->call('route:clear');
 
         $this->verbose = $this->option("verbose") ? true : ($this->option("no-verbose") ? false : config("router.defaults.verbose"));
         $this->stats = $this->option("stats") ? true : ($this->option("no-stats") ? false : config("router.defaults.stats"));
+        $this->clean = $this->option("clean") ? true : ($this->option("no-list") ? true : config("router.defaults.route_list", false));
 
         //Listar Controllers
         if($this->verbose) $this->info("Iniciando listagem de Controllers");
@@ -163,7 +167,7 @@ class RouterCommand extends Command
         $this->rotas_web = $this->getRoutes($this->controllers_web);
         $this->bar->advance();
 
-        $this->rotas_api = $this->getRoutes($this->controllers_api);
+        $this->rotas_api = $this->getRoutes($this->controllers_api, '', true);
         $this->bar->advance();
 
         //dump($this->rotas_api);
@@ -206,6 +210,11 @@ class RouterCommand extends Command
         $this->call("cache:clear");
 
         $this->info("Rotas Geradas com sucesso!");
+
+        if(!$this->clean){
+            $this->info("Lista de Rotas:");
+            $this->call('route:list');
+        }
     }
 
     public function buildScript($itens){
@@ -252,6 +261,7 @@ class RouterCommand extends Command
                 $controller_namespace = $this->parser->extractFileNamespace($controller->getPathname());
                 $classe = "{$controller_namespace}\\{$controller_class}";
 
+                //dump($classe);
                 $controller_methods = get_class_methods($classe);
                 $nome_rota = str_replace('App\Http\Controllers\\', "", $classe);
 
@@ -284,7 +294,8 @@ class RouterCommand extends Command
                     }
                     if(!$group_add->middleware){
                         //Pegar Middleware padrão definida no config caso não seja definina no phpDOC
-                        $group_add->middleware = config("router.defaults.middleware.".($api ? "api" : "web"));
+                        //dump($group_add->title, $path);
+                        //$group_add->middleware = config("router.defaults.middleware.".($api ? "api" : "web"));
                     }
 
                     //Remove metodos padroes
@@ -379,16 +390,17 @@ class RouterCommand extends Command
 
                 //Verifica se existem opções definidas no config.directories
 
-                $dir_config_name = $path_collection->filter()->implode('/');
+                $dir_config_name = ($api ? 'API/' : '').$path_collection->filter()->implode('/');
                 $config_directories = collect(config("router.directories"));
+                //dump($dir_config_name);
                 if($config_directories->has($dir_config_name)){
 
                     foreach($config_directories->get($dir_config_name) as $attribute => $value){
-                        $group_add->$attribute = $value;
+                        $group_add->{$attribute} = $value;
                     }
                 }
 
-                $group_add->itens = $this->getRoutes($controller, $path.DIRECTORY_SEPARATOR.$dir);
+                $group_add->itens = $this->getRoutes($controller, $path.DIRECTORY_SEPARATOR.$dir, $api);
 
                 $retorno->add($group_add);
             }

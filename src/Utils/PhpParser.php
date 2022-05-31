@@ -16,11 +16,11 @@ class PhpParser
         while (!$class) {
             $tokens = token_get_all($file_content);
 
-            for (;$i<count($tokens);$i++) {
+            for ($iMax = count($tokens); $i< $iMax; $i++) {
                 if ($tokens[$i][0] === T_CLASS) {
-                    for ($j=$i+1;$j<count($tokens);$j++) {
+                    for ($j=$i+1, $jMax = count($tokens); $j< $jMax; $j++) {
                         if ($tokens[$j] === '{') {
-                            $class = $tokens[$i+2][1];
+                            $class = $tokens[$i + 2][1];
                         }
                     }
                 }

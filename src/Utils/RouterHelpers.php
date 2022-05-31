@@ -21,8 +21,8 @@ class RouterHelpers
         $export = join(PHP_EOL, array_filter(["["] + $array_trait));
 
         $export = str_replace("'",'"', $export);
-        $export = str_replace("{",'".', $export);
-        $export = str_replace("}",'."', $export);
+        $export = str_replace("{{",'".', $export);
+        $export = str_replace("}}",'."', $export);
 
         return $export;
     }
