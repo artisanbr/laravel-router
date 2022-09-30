@@ -1,7 +1,7 @@
 <?php
 
 
-namespace DevApex\LaravelRouter\Utils;
+namespace ArtisanLabs\LaravelRouter\Utils;
 
 
 use Illuminate\Support\Str;

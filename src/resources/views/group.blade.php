@@ -1,4 +1,4 @@
-@php /**  @var \DevApex\LaravelRouter\Models\RouteGroupModel $item */ @endphp
+@php /**  @var \ArtisanLabs\LaravelRouter\Models\RouteGroupModel $item */ @endphp
 
 //{{ $item->title }}
 Route::group({!! $item->getProps() !!},

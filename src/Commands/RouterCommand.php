@@ -1,6 +1,6 @@
 <?php
 
-namespace DevApex\LaravelRouter\Commands;
+namespace ArtisanLabs\LaravelRouter\Commands;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Console\Command;
@@ -13,9 +13,9 @@ use ReflectionClass;
 use ReflectionMethod;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Finder\SplFileInfo;
-use DevApex\LaravelRouter\Models\RouteGroupModel;
-use DevApex\LaravelRouter\Models\RouteModel;
-use DevApex\LaravelRouter\Utils\PhpParser;
+use ArtisanLabs\LaravelRouter\Models\RouteGroupModel;
+use ArtisanLabs\LaravelRouter\Models\RouteModel;
+use ArtisanLabs\LaravelRouter\Utils\PhpParser;
 
 /**
  * Gerador de Rotas para o laravel

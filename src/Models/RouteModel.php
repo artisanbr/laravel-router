@@ -1,11 +1,11 @@
 <?php
 
 
-namespace DevApex\LaravelRouter\Models;
+namespace ArtisanLabs\LaravelRouter\Models;
 
 
 use Illuminate\Support\Str;
-use DevApex\LaravelRouter\Utils\RouterHelpers;
+use ArtisanLabs\LaravelRouter\Utils\RouterHelpers;
 
 /**
  * Class RouteModel

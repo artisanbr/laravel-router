@@ -1,5 +1,5 @@
 <?php
-namespace DevApex\LaravelRouter\Utils;
+namespace ArtisanLabs\LaravelRouter\Utils;
 
 class PhpParser
 {

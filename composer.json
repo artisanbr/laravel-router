@@ -33,13 +33,13 @@
         },
         "laravel": {
             "providers": [
-                "DevApex\\LaravelRouter\\RouterServiceProvider"
+                "ArtisanLabs\\LaravelRouter\\RouterServiceProvider"
             ]
         }
     },
     "autoload": {
         "psr-4": {
-            "DevApex\\LaravelRouter\\": "src"
+            "ArtisanLabs\\LaravelRouter\\": "src"
         }
     },
     "minimum-stability": "dev",

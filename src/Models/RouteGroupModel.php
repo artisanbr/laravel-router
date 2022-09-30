@@ -1,13 +1,13 @@
 <?php
 
 
-namespace DevApex\LaravelRouter\Models;
+namespace ArtisanLabs\LaravelRouter\Models;
 
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use phpDocumentor\Reflection\Types\Self_;
-use DevApex\LaravelRouter\Utils\RouterHelpers;
+use ArtisanLabs\LaravelRouter\Utils\RouterHelpers;
 
 class RouteGroupModel
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace DevApex\LaravelRouter;
+namespace ArtisanLabs\LaravelRouter;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Route;
