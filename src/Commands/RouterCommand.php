@@ -286,12 +286,19 @@ class RouterCommand extends Command
                         //Criar prefixo baseado no nome da Classe
                         $group_add->prefix = Str::lower($controller_class);
                         $group_add->prefix = str_replace("controller", "", $group_add->prefix);
+                        $group_add->prefix = trim($group_add->prefix);
                     }
                     if(!isset($class_phpdoc_params["as"])){
                         //Criar prefixo baseado no nome da Classe
                         $group_add->as = config("router.force_lowercase") ? Str::lower($controller_class) : $controller_class;
                         $group_add->as = str_replace("controller", "", $group_add->as) . ".";
+                        $group_add->as = trim($group_add->as);
                     }
+
+
+                    $group_add->as = $this->traitPropValue($group_add->as);
+                    $group_add->prefix = $this->traitPropValue($group_add->prefix);
+
                     if(!$group_add->middleware){
                         //Pegar Middleware padrão definida no config caso não seja definina no phpDOC
                         //dump($group_add->title, $path);
@@ -324,6 +331,11 @@ class RouterCommand extends Command
                             if(!$route_add->uses){
                                 $route_add->uses = ($controller->getRelativePath() ? $controller->getRelativePath().DIRECTORY_SEPARATOR : "")."{$controller_class}@{$method}";
                             }
+
+
+                            $route_add->as = $this->traitPropValue($route_add->as);
+                            $route_add->prefix = $this->traitPropValue($route_add->prefix);
+
                             /*if(!$route_add->middleware){
                                 //Pegar Middleware padrão definida no config caso não seja definina no phpDOC
                                 $route_add->middleware = config("router.defaults.middleware.".($api ? "api" : "web"));
@@ -361,6 +373,8 @@ class RouterCommand extends Command
                                 $route_add->url =  $method_phpdoc_params['url'];
                             }
 
+                            $route_add->url = $this->traitPropValue($route_add->url);
+
                             $group_add->itens->add($route_add);
                         }
                     }
@@ -387,6 +401,9 @@ class RouterCommand extends Command
                 $group_add->prefix = Str::lower($dir);
                 $group_add->as = config("router.force_lowercase") ? Str::lower($dir.".") : $dir.".";
                 $group_add->namespace = $dir;
+
+                $group_add->as = $this->traitPropValue($group_add->as);
+                $group_add->prefix = $this->traitPropValue($group_add->prefix);
 
                 //Verifica se existem opções definidas no config.directories
 
@@ -527,5 +544,9 @@ class RouterCommand extends Command
         \n
                 %content%
         });\n\n";
+    }
+
+    public function traitPropValue($value){
+        return trim(preg_replace( "/\r|\n/", "", $value));
     }
 }
