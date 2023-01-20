@@ -193,6 +193,7 @@ class RouterCommand extends Command
         $file_web = base_path("routes".DIRECTORY_SEPARATOR.config("router.generated_files.web"));
         $file_api = base_path("routes".DIRECTORY_SEPARATOR.config("router.generated_files.api"));
 
+        $filesystem->delete([$file_web, $file_api]);
 
         $filesystem->put($file_web, $script_web);
         $this->bar->advance();
