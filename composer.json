@@ -1,5 +1,6 @@
 {
     "name": "artisan-labs/laravel-router",
+    "version": "dev-stable",
     "description": "Laravel Controller phpDOC Route Generator",
     "keywords": [
         "laravel",
@@ -26,11 +27,6 @@
         "sort-packages": true
     },
     "extra": {
-        "branch-alias": {
-            "dev-main": "2.0-dev",
-            "master": "dev-main",
-            "dev": "dev-main"
-        },
         "laravel": {
             "providers": [
                 "ArtisanLabs\\LaravelRouter\\RouterServiceProvider"

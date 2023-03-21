@@ -3,19 +3,18 @@
 namespace ArtisanLabs\LaravelRouter\Commands;
 
 use App\Http\Controllers\Controller;
+use ArtisanLabs\LaravelRouter\Models\RouteGroupModel;
+use ArtisanLabs\LaravelRouter\Models\RouteModel;
+use ArtisanLabs\LaravelRouter\Utils\PhpParser;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\View;
 use Illuminate\Support\Str;
 use ReflectionClass;
 use ReflectionMethod;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Finder\SplFileInfo;
-use ArtisanLabs\LaravelRouter\Models\RouteGroupModel;
-use ArtisanLabs\LaravelRouter\Models\RouteModel;
-use ArtisanLabs\LaravelRouter\Utils\PhpParser;
 
 /**
  * Gerador de Rotas para o laravel
@@ -262,7 +261,6 @@ class RouterCommand extends Command
                 $controller_namespace = $this->parser->extractFileNamespace($controller->getPathname());
                 $classe = "{$controller_namespace}\\{$controller_class}";
 
-                //dump($classe);
                 $controller_methods = get_class_methods($classe);
                 $nome_rota = str_replace('App\Http\Controllers\\', "", $classe);
 
@@ -300,10 +298,14 @@ class RouterCommand extends Command
                     $group_add->as = $this->traitPropValue($group_add->as);
                     $group_add->prefix = $this->traitPropValue($group_add->prefix);
 
-                    if(!$group_add->middleware){
+                    $groupMiddlewareGenerated = true;
+
+                    if(!$group_add->middleware && config('router.force_defaults', false)){
                         //Pegar Middleware padrão definida no config caso não seja definina no phpDOC
                         //dump($group_add->title, $path);
-                        //$group_add->middleware = config("router.defaults.middleware.".($api ? "api" : "web"));
+                        $group_add->middleware = config("router.defaults.middleware.".($api ? "api" : "web"));
+                    }else{
+                        $groupMiddlewareGenerated = false;
                     }
 
                     //Remove metodos padroes
@@ -337,10 +339,10 @@ class RouterCommand extends Command
                             $route_add->as = $this->traitPropValue($route_add->as);
                             $route_add->prefix = $this->traitPropValue($route_add->prefix);
 
-                            /*if(!$route_add->middleware){
+                            if($groupMiddlewareGenerated && !$route_add->middleware && config('router.force_defaults', false)){
                                 //Pegar Middleware padrão definida no config caso não seja definina no phpDOC
                                 $route_add->middleware = config("router.defaults.middleware.".($api ? "api" : "web"));
-                            }*/
+                            }
 
                             if(!isset($method_phpdoc_params['url'])) {
 
