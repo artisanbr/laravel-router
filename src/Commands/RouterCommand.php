@@ -2,10 +2,10 @@
 
 namespace ArtisanLabs\LaravelRouter\Commands;
 
-use App\Http\Controllers\Controller;
 use ArtisanLabs\LaravelRouter\Models\RouteGroupModel;
 use ArtisanLabs\LaravelRouter\Models\RouteModel;
 use ArtisanLabs\LaravelRouter\Utils\PhpParser;
+use App\Http\Controllers\Controller;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Collection;
