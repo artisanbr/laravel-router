@@ -262,6 +262,7 @@ class RouterCommand extends Command
                 $classe = "{$controller_namespace}\\{$controller_class}";
 
                 //dump($controller->getPathname(), $classe, $controller_class);
+                //dump($classe);
                 $controller_methods = get_class_methods($classe);
                 $nome_rota = str_replace('App\Http\Controllers\\', "", $classe);
 
